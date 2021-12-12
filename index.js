@@ -8,6 +8,9 @@ app.use(Express.json())
 app.use(Express.urlencoded({extended:false}))
 app.use(Express.static(__dirname+'/public'))
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 const session = require('express-session');
 app.use(session({
     key:process.env.KEY,
