@@ -7,7 +7,11 @@ router.get('/',(req,res,next)=>{
 });
 
 router.post('/registration',(req,res,next)=>{
-    new Users(req,res,next).registerUser();
+    new Users(req,res,next).registration();
+})
+
+router.post('/login',(req,res,next)=>{
+    new Users(req,res,next).login();
 })
 
 module.exports = router;

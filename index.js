@@ -28,6 +28,7 @@ app.set('view engine','ejs');
 
 require('./utils/database_connection')();
 require('./router/index')(app);
+app.use(require('./utils/error_handler'));
 
 app.listen(8000,()=>{
  console.log(`Server port ${process.env.PORT} is running`)

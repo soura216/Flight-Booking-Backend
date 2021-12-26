@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 module.exports = class Users{
 
@@ -12,21 +13,49 @@ module.exports = class Users{
         this.res.render('pages/users/form');
     }
 
-    async registerUser(){
+    async registration(){
         try {
             const user = new User();
             user.emailId = this.req.body.emailId;
-            user.password = this.req.body.password;    
+            const salt = await bcrypt.genSalt(10)
+            const hashPassword =  await bcrypt.hash(this.req.body.password,salt)
+            user.password = hashPassword;    
             user.userName = this.req.body.userName;
-            let insertedUSer =  await user.save();
+            const insertedUSer =  await user.save();
             this.res.status(200).send({insertedUSer:insertedUSer})
         } catch(err){
             if (err.name === 'ValidationError') 
                 this.res.status(400).send({ error: err.message }); 
             else if(err.name === 'MongoServerError' && err.code === 11000 && Object.keys(err.keyValue)[0] === 'emailId')  
                 this.res.status(400).send({error: 'email must be unique'});
-            else this.next(err);
+            else return this.next(err);
         }
-        
+    }
+
+    async login(){
+        try{
+            const emailId = this.req.body.emailId;
+            const password = this.req.body.password;
+            let userDetails = await User.findOne(
+                {'emailId':emailId},{_id:0}
+            );
+            if(userDetails){
+                const isPasswordMatch = await bcrypt.compare(password,userDetails.password)
+                if(isPasswordMatch){
+                    userDetails.password = null
+                    this.res.status(200).send({
+                        userDetails: userDetails,
+                        msg: 'Login successfully!'
+                    })
+                } else {
+                    this.res.status(400).send({error:"Your password does not match with your emailId"})
+                }
+            } else {
+                this.res.status(400).send({error: "User doesn't exist in the collection"})
+            }
+            
+        } catch(err){
+            return this.next(err)
+        }
     }
 }

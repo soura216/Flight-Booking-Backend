@@ -4,7 +4,7 @@ const config = require('config');
 
 module.exports = function(){
 
-    if(config.has('DB_URL')) mongoose.connect(config.get('DB_URL'));
+    if(config.has('DB_URL')) mongoose.connect(config.get('DB_URL'),{autoIndex: true});
     
     mongoose.connection
         .once('open',()=>{

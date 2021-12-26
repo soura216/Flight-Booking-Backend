@@ -10,6 +10,15 @@ const emailValidateErrorMsg = function(data){
     return `${data.value} is not a valid email`;
 }
 
+const modifyUsername = function(data){
+    let arrOfData = data.split(' ');
+    arrOfData.forEach((value,index)=>{
+        arrOfData[index] = value.charAt(0).toUpperCase() + value.slice(1)
+    })
+    return arrOfData.join(" ");
+}
+
+
 const schema = new mongoose.Schema({
     emailId: { 
         type: String, 
@@ -25,7 +34,9 @@ const schema = new mongoose.Schema({
     },
     userName:{
         type: String,
-        required: [true, 'userName is mandatory']
+        required: [true, 'userName is mandatory'],
+        set: (data)=>{return data.charAt(0).toUpperCase() + data.slice(1)},
+        get: modifyUsername
     },
     walletAmount:{
         type: Number,
@@ -42,6 +53,6 @@ const schema = new mongoose.Schema({
         default: 'User'
     },
     bookings:[userBookingsSchema]
-})
+},{toJSON: {getters: true}})
 
 module.exports = mongoose.model('User',schema)
