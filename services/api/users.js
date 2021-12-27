@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 
 module.exports = class Users{
@@ -7,10 +7,6 @@ module.exports = class Users{
         this.req = req;
         this.res = res;
         this.next = next;
-    }
-    
-    index(){
-        this.res.render('pages/users/form');
     }
 
     async registration(){
@@ -37,12 +33,13 @@ module.exports = class Users{
             const emailId = this.req.body.emailId;
             const password = this.req.body.password;
             let userDetails = await User.findOne(
-                {'emailId':emailId},{_id:0}
+                {'emailId':emailId},{_id:0,__v:0}
             );
             if(userDetails){
                 const isPasswordMatch = await bcrypt.compare(password,userDetails.password)
                 if(isPasswordMatch){
-                    userDetails.password = null
+                    userDetails = userDetails.toObject()
+                    delete userDetails.password;
                     this.res.status(200).send({
                         userDetails: userDetails,
                         msg: 'Login successfully!'
@@ -52,8 +49,7 @@ module.exports = class Users{
                 }
             } else {
                 this.res.status(400).send({error: "User doesn't exist in the collection"})
-            }
-            
+            }        
         } catch(err){
             return this.next(err)
         }

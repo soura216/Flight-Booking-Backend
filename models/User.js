@@ -36,7 +36,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: [true, 'userName is mandatory'],
         set: (data)=>{return data.charAt(0).toUpperCase() + data.slice(1)},
-        get: modifyUsername
+        transform: modifyUsername
     },
     walletAmount:{
         type: Number,
@@ -53,6 +53,6 @@ const schema = new mongoose.Schema({
         default: 'User'
     },
     bookings:[userBookingsSchema]
-},{toJSON: {getters: true}})
+})
 
 module.exports = mongoose.model('User',schema)

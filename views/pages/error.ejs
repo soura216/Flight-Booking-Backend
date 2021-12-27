@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../layouts/header') %> 
+    <body>
+        <style>
+            body{
+                background: #ddd;
+            }
+            div{
+                margin: 18% 0px;
+                text-align: center;
+                max-height: 700px;
+            }
+        </style>
+                <div>
+                    <h1><%- title %> </h1>
+                    <p><%- desc %> </p>
+                    <p><a class="btn btn-danger btn-sm" href="/auth/login">Back to Login Page</a>
+                    </p>
+                </div>
+        <%- include('../layouts/footer') %> 
+    </body>
+</html>    
