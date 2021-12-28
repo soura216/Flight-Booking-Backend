@@ -1,7 +1,7 @@
 module.exports = (req,res,next)=>{
     if(req.session.csrf === req.body.csrf){
-        next()
+        return next()
     } else {
-        next()
+        return res.redirect('/error/403')
     }
 }

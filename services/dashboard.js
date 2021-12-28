@@ -6,6 +6,6 @@ module.exports = class Dashboard{
     }
 
     index(){
-        this.res.render('pages/dasboard')
+        return this.res.render('pages/dasboard')
     }
 }

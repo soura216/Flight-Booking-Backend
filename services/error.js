@@ -7,7 +7,7 @@ module.exports = class Error {
     }
 
     forbidden(){
-        this.res.render('pages/error',{title:'Forbidden - 403',desc:'CSRF verification failed'})
+        return this.res.render('pages/error',{title:'Forbidden - 403',desc:'CSRF verification failed'})
     }
 
 }

@@ -15,13 +15,16 @@ const session = require('express-session');
 app.use(session({
     key:process.env.KEY,
     secret:process.env.SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie:{
         expires: new Date(Date.now() + 60000),
         maxAge: 60000 
     }
 }))
+
+const flash = require('express-flash');
+app.use(flash())
 
 global.rootDirectory = __dirname;
 app.set('view engine','ejs');
