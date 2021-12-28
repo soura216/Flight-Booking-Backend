@@ -18,7 +18,7 @@
                             <form method="post" action="/auth/login">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="E-mail" name="emailId" type="email" autofocus>
+                                        <input class="form-control" placeholder="E-mail" name="emailId" type="email" autofocus value="<%= emailId %>">
                                     </div>
                                     <input type="hidden" name="csrf" value="<%= csrf %>">
                                     <div class="form-group">
@@ -26,7 +26,8 @@
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                            <input name="remember" type="checkbox" value="true" 
+                                            <% if (remember) { %> checked <% } %>>Remember Me
                                         </label>
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->

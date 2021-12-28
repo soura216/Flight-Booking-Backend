@@ -5,6 +5,6 @@ module.exports = function(message,status){
     const file = new Date(Date.now()).toISOString().split('T')[0];
     
     fs.appendFile(rootDirectory+'/logs/'+file+'.log',content,(err)=>{
-        console.log(err)
+        if(err) console.log(err)
     })
 }

@@ -15,6 +15,7 @@ module.exports = class Users{
             user.emailId = this.req.body.emailId;
             const salt = await bcrypt.genSalt(10)
             const hashPassword =  await bcrypt.hash(this.req.body.password,salt)
+            user.userId = Date.now();
             user.password = hashPassword;    
             user.userName = this.req.body.userName;
             const insertedUSer =  await user.save();

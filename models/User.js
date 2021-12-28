@@ -20,6 +20,9 @@ const modifyUsername = function(data){
 
 
 const schema = new mongoose.Schema({
+    userId: {
+        type: Number
+    },
     emailId: { 
         type: String, 
         validate:[
