@@ -23,11 +23,11 @@ const schema = new mongoose.Schema({
         default: 'Running'
     },
     departureTime:{
-        type: String,
+        type: Date,
         required: [true, 'Departure Time is mandatory']
     },
     arrivalTime:{
-        type: String,
+        type: Date,
         required: [true, 'Arrival Time is mandatory']
     },
     seatsAvailable:{
