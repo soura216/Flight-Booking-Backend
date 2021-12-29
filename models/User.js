@@ -28,7 +28,7 @@ const schema = new mongoose.Schema({
         validate:[
             {validator:emailValidate, msg:emailValidateErrorMsg}
         ], 
-        required: [true, 'emailID is mandatory'],
+        required: [true, 'Email-ID is mandatory'],
         unique: true 
     },
     password: {
@@ -37,7 +37,7 @@ const schema = new mongoose.Schema({
     },
     userName:{
         type: String,
-        required: [true, 'userName is mandatory'],
+        required: [true, 'UserName is mandatory'],
         set: (data)=>{return data.charAt(0).toUpperCase() + data.slice(1)},
         transform: modifyUsername
     },
