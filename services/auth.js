@@ -2,6 +2,7 @@ const { randomBytes } = require('crypto');
 const joi = require('joi');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { joiSchemaOptions } = require('../utils/form_utils')
 
 module.exports = class Auth{
 
@@ -33,12 +34,7 @@ module.exports = class Auth{
                 emailId: joi.string().email(),
                 password: joi.string().required()
             })
-            const options = {
-                abortEarly: false, // include all errors
-                allowUnknown: true, // ignore unknown props
-                stripUnknown: true // remove unknown props
-            };
-            const { error, value }  = schema.validate(this.req.body,options);
+            const { error, value }  = schema.validate(this.req.body,joiSchemaOptions);
             if(error){
                 const errorMsg = []
                 error.details.map((data,index)=>{
