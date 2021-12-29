@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const journeySchema = require('./JourneySchema');
 
 const fareSchema = new mongoose.Schema({
     travelClass:{
@@ -42,6 +43,9 @@ const schema = new mongoose.Schema({
         type: Number,
         enum: [0,1,2,3],
         default: 1
+    },
+    journey:{
+        type: journeySchema
     },
     bookings:{
         type: Array
