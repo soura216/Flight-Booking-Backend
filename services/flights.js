@@ -1,6 +1,5 @@
 const Flight = require('../models/Flight');
-const joi = require('joi');
-const { flashError, joiSchemaOptions } = require('../utils/form_utils');
+const { flashError, joiSchemaOptions, flightsFormSchema } = require('../utils/form_utils');
 
 module.exports = class Flights {
    
@@ -16,18 +15,7 @@ module.exports = class Flights {
 
     async createAction(){
         try {
-            const schema = joi.object({
-                airlinesName: joi.string().required(),
-                flightStatus: joi.string().required(),
-                departureTime: joi.date().required(),
-                arrivalTime: joi.date().required(),
-                seatsAvailable: joi.number().required(),
-                businessClass: joi.number().required(),
-                firstClass: joi.number().required(),
-                stops: joi.number().required(),
-                source: joi.string().required(),
-                destination: joi.string().required()
-            })
+            const schema = flightsFormSchema;
             const { error, value }  = schema.validate(this.req.body,joiSchemaOptions);
             if(error){
                 await flashError(error,this.req);

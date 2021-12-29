@@ -1,3 +1,24 @@
+const joi = require('joi')
+
+module.exports.flightsFormSchema = joi.object({
+    airlinesName: joi.string().required(),
+    flightStatus: joi.string().required(),
+    departureTime: joi.date().required(),
+    arrivalTime: joi.date().required(),
+    seatsAvailable: joi.number().required(),
+    businessClass: joi.number().required(),
+    firstClass: joi.number().required(),
+    stops: joi.number().required(),
+    source: joi.string().required(),
+    destination: joi.string().disallow(joi.ref('source')).required()
+});
+
+module.exports.joiSchemaOptions = {
+    abortEarly: false, // include all errors
+    allowUnknown: true, // ignore unknown props
+    stripUnknown: true // remove unknown props
+}
+
 module.exports.flashError = (error,req)=>{
     const obj = {}
     error.details.map((data,index)=>{
@@ -7,12 +28,6 @@ module.exports.flashError = (error,req)=>{
     req.flash('error',obj);
     return;
 };
-
-module.exports.joiSchemaOptions = {
-    abortEarly: false, // include all errors
-    allowUnknown: true, // ignore unknown props
-    stripUnknown: true // remove unknown props
-}
 
 const errorFieldName = {
     airlinesName: 'Airlines Name',
