@@ -22,17 +22,24 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form role="form">
+                                            <form role="form" method="post" action="/flight/create">
                                                 <div class="form-group">
-                                                    <label>Airlines Name</label>
+                                                    <label>
+                                                        Airlines Name
+                                                    </label>
                                                     <input class="form-control" name="airlinesName" value="">
-                                                    <!-- <p class="help-block">Example block-level help text here.</p> -->
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].airlinesName
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].airlinesName %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Flight Status</label>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="flightStatus" value="Running" checked>Running
+                                                            <input type="radio" name="flightStatus" value="Running">Running
                                                         </label>
                                                     </div>
                                                     <div class="radio">
@@ -40,20 +47,38 @@
                                                             <input type="radio" name="flightStatus" value="Cancelled">Cancelled
                                                         </label>
                                                     </div>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].flightStatus
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].flightStatus %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Departure Time</label>
                                                     <input class="form-control"  type="date" name="departureTime">
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].departureTime
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].departureTime %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Arrival Time</label>
                                                     <input class="form-control"  type="date" name="arrivalTime">
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].arrivalTime
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].arrivalTime %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Seats Available</label>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="seatsAvailable" value="40" checked>40
+                                                            <input type="radio" name="seatsAvailable" value="40">40
                                                         </label>
                                                     </div>
                                                     <div class="radio">
@@ -61,6 +86,12 @@
                                                             <input type="radio" name="seatsAvailable" value="50">50
                                                         </label>
                                                     </div>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].seatsAvailable
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].seatsAvailable %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Business Class Fare</label>
@@ -71,6 +102,12 @@
                                                         <option value="50000">50000</option>
                                                         <option value="60000">60000</option>
                                                     </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].businessClass
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].businessClass %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>First Class Fare</label>
@@ -81,12 +118,18 @@
                                                         <option value="5000">5000</option>
                                                         <option value="6000">6000</option>
                                                     </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].firstClass
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].firstClass %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Stops</label>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="stops" value="0" checked>0
+                                                            <input type="radio" name="stops" value="0">0
                                                         </label>
                                                     </div>
                                                     <div class="radio">
@@ -104,29 +147,48 @@
                                                             <input type="radio" name="stops" value="3">3
                                                         </label>
                                                     </div>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].stops
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].stops %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Source</label>
                                                     <select class="form-control" name="source">
-                                                        <option>Select State</option>
+                                                        <option value="">Select State</option>
                                                         <option value="Kolkata">Kolkata</option>
                                                         <option value="Mumbai">Mumbai</option>
                                                         <option value="Delhi">Delhi</option>
                                                         <option value="Bangalore">Bangalore</option>
                                                         <option value="Bhubaneswar">Bhubaneswar</option>
                                                     </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].source
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].source %></p>
+                                                    <% } %>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Destination</label>
                                                     <select class="form-control" name="destination">
-                                                        <option>Select State</option>
+                                                        <option value="">Select State</option>
                                                         <option value="Kolkata">Kolkata</option>
                                                         <option value="Mumbai">Mumbai</option>
                                                         <option value="Delhi">Delhi</option>
                                                         <option value="Bangalore">Bangalore</option>
                                                         <option value="Bhubaneswar">Bhubaneswar</option>
                                                     </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].destination
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].destination %></p>
+                                                    <% } %>
                                                 </div>
+                                                <input type="hidden" value="<%= csrf %>" name="csrf">
                                                 <button type="submit" class="btn btn-default">Submit Button</button>
                                                 <button type="reset" class="btn btn-default">Reset Button</button>
                                             </form>
