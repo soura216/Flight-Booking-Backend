@@ -50,7 +50,7 @@ module.exports = class Auth{
                     const isPasswordMatch = await bcrypt.compare(value["password"],userDetails.password)
                     if(isPasswordMatch){
                         if(this.req.body.remember){
-                            await this.res.cookie('rememberMe',{remember:true,emailId:this.req.body.emailId});
+                            await this.res.cookie('rememberMe',{remember:true,emailId:this.req.body.emailId},{maxAge: 24 * 60 * 60 * 1000});
                         } 
                         this.req.session.authId = userDetails.userId.toString();
                         return this.res.redirect('/')
