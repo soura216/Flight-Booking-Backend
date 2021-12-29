@@ -9,3 +9,16 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="/js/startmin.js"></script>
+
+<script>
+    $(document).ready(()=>{
+        $.ajax({url:'/auth/details',
+            success: (result)=>{
+                if(result.data.userName) $("#user-name").text(result.data.userName);
+            },
+            error: (err)=>{
+                console.log(err)
+            }
+        })
+    })
+</script>

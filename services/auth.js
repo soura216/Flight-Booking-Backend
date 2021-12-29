@@ -12,9 +12,8 @@ module.exports = class Auth{
     }
 
     async loginForm(){
-        if(!this.req.session.csrf){
-            this.req.session.csrf = await randomBytes(100).toString('base64');
-        }
+        if(!this.req.session.csrf) this.req.session.csrf = await randomBytes(100).toString('base64');
+        if(this.req.session.authId) return this.res.redirect('back');
         let remember = false;
         let emailId = '';
         if(this.req.cookies.rememberMe){
@@ -71,5 +70,28 @@ module.exports = class Auth{
         } catch(err){
             return this.next(err)
         }
+    }
+
+    async logoutAction(){
+        try {
+            await this.req.session.destroy();
+            await this.res.clearCookie(process.env.KEY,{path:'/'});
+            return this.res.redirect('/auth/login');
+        } catch(err){
+            return this.next(err)
+        }    
+    }
+
+    async authDetails(){
+        try {
+            const userInfo = await User.findOne(
+                {userId:this.req.session.authId},
+                {_id:0,userName:1,emailId:1}
+            );
+            if(userInfo) return this.res.status(200).send({data:userInfo})
+            else this.res.status(400).send({error: "User doesn't exist in the collection"});
+        } catch(err) {
+            return this.next(err)
+        }   
     }
 }
