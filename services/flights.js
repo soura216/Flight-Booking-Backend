@@ -38,7 +38,37 @@ module.exports = class Flights {
                 destination: value["destination"]
             }
             await flight.save();
-            return this.res.redirect('/')
+            return this.res.redirect('/flight/list')
+        } catch(err){
+            return this.next(err)
+        }
+    }
+
+    async list(){
+        try{
+            const { source, destination, departureTime, arrivalTime } = this.req.query;
+            let flightsList = []
+            if(source && destination && departureTime && arrivalTime){
+                flightsList = await Flight.find(
+                    {
+                        $and: [
+                            {'journey.source':{$eq:source}},
+                            {'journey.destination':{$eq:destination}},
+                            {'departureTime':{$gte:departureTime}},
+                            {'arrivalTime':{$lte:arrivalTime}}
+                        ]
+                    },
+                    {_id:0}
+                )
+            } else {
+                flightsList = await Flight.find(
+                    {},
+                    {_id:0}
+                )
+            }
+            const sourceList = await Flight.distinct('journey.source');
+            const destinationList = await Flight.distinct('journey.destination');
+            return this.res.render('pages/flight/list',{'flightsList':flightsList,'sourceList':sourceList,'destinationList':destinationList});
         } catch(err){
             return this.next(err)
         }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../layouts/header') %> 
+    <body>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <%- include('../../layouts/navbar') %> 
+            <!-- Page Content -->
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-header">Fligh List</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Flight DataTable
+                                </div>
+                                <div class="panel-body">
+                                    
+                                    <form method="GET">
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label>Departure Time</label>
+                                                <input class="form-control"  type="date" name="departureTime" required>
+                                            </div> 
+                                            <div class="col-md-4 form-group">
+                                                <label>Arrival Time</label>
+                                                <input class="form-control"  type="date" name="arrivalTime" required>
+                                            </div> 
+                                            <div class="col-md-4 form-group">
+                                                <label>Source</label>
+                                                <select class="form-control" name="source" required>
+                                                    <option value="">Select State</option>
+                                                    <%  sourceList.forEach(function(data,index) { %>
+                                                        <option value="<%= data %>"><%= data %></option>
+                                                    <%  }) %> 
+                                                </select>
+                                            </div> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label>Destination</label>
+                                                <select class="form-control" name="destination" required>
+                                                    <option value="">Select State</option>
+                                                    <%  destinationList.forEach(function(data,index) { %>
+                                                        <option value="<%= data %>"><%= data %></option>
+                                                    <%  }) %> 
+                                                </select>
+                                            </div> 
+                                            <div class="col-md-8 form-group" style="margin-top: 22px;">
+                                                <button type="submit" class="btn btn-default">Submit</button>
+                                                <a href="/flight/list" class="btn btn-default">Reset</a> 
+                                            </div>  
+                                        </div> 
+                                    </form> 
+                                       
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Airlines Name</th>
+                                                    <th>Source</th>
+                                                    <th>Destination</th>
+                                                    <th>Departure Time</th>
+                                                    <th>Arrival Time</th>
+                                                    <th>Seats Available</th>
+                                                    <th>Flight Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% flightsList.forEach(function(data,index) {  %> 
+                                                    <tr>
+                                                        <td><%= data.airlinesName %> </td>
+                                                        <td><%= data.journey.source %> </td>
+                                                        <td><%= data.journey.destination %> </td>
+                                                        <td><%= data.departureTime %> </td>
+                                                        <td><%= data.arrivalTime %> </td>
+                                                        <td><%= data.seatsAvailable %> </td>
+                                                        <td><%= data.flightStatus %> </td>
+                                                        <td>
+                                                            <a href="#"><i class="fa fa-edit fa-fw"></i></a>
+                                                        </td>
+                                                    </tr>    
+                                                <% }) %> 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../../layouts/footer') %> 
+    </body>
+</html>

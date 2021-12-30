@@ -12,4 +12,8 @@ router.post('/create',[session_handler,csrf_handler],(req,res,next)=>{
     new Flights(req,res,next).createAction();
 })
 
+router.get('/list',session_handler,(req,res,next)=>{
+    new Flights(req,res,next).list();
+})
+
 module.exports = router;

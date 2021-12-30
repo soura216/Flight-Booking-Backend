@@ -10,6 +10,10 @@
 <!-- Custom Theme JavaScript -->
 <script src="/js/startmin.js"></script>
 
+<!-- DataTables JavaScript -->
+<script src="/js/dataTables/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables/dataTables.bootstrap.min.js"></script>
+
 <script>
     $(document).ready(()=>{
         $.ajax({url:'/auth/details',
@@ -20,5 +24,8 @@
                 console.log(err)
             }
         })
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
     })
 </script>
