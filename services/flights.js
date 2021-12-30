@@ -1,6 +1,6 @@
 const Flight = require('../models/Flight');
 const { flashError, joiSchemaOptions, flightsFormSchema } = require('../utils/form_utils');
-
+const moment = require('moment')
 module.exports = class Flights {
    
     constructor(req,res,next){
@@ -10,7 +10,7 @@ module.exports = class Flights {
     }
 
     createForm(){
-        return this.res.render('pages/flight/form',{csrf:this.req.session.csrf})
+        return this.res.render('pages/flight/add',{csrf:this.req.session.csrf})
     }
 
     async createAction(){
@@ -69,6 +69,63 @@ module.exports = class Flights {
             const sourceList = await Flight.distinct('journey.source');
             const destinationList = await Flight.distinct('journey.destination');
             return this.res.render('pages/flight/list',{'flightsList':flightsList,'sourceList':sourceList,'destinationList':destinationList});
+        } catch(err){
+            return this.next(err)
+        }
+    }
+
+    async editForm(){
+        try{
+            const flightId = this.req.params.flightId;
+            let flightDetails = await Flight.findOne(
+                {'flightId':flightId},
+                {_id:0}
+            )
+            flightDetails = flightDetails.toObject()
+            flightDetails.arrivalTime = moment(flightDetails.arrivalTime).format('YYYY-MM-DD');
+            flightDetails.departureTime = moment(flightDetails.departureTime).format('YYYY-MM-DD');    
+            return this.res.render('pages/flight/edit',{csrf:this.req.session.csrf,flightDetails:flightDetails})
+        } catch(err){
+            return this.next(err);
+        }
+    }
+
+    async editAction(){
+        try {
+            const schema = flightsFormSchema;
+            const { error, value }  = schema.validate(this.req.body,joiSchemaOptions);
+            const { flightId } = this.req.body;
+            if(error){
+                await flashError(error,this.req);
+                return this.res.redirect('/flight/edit/'+flightId);
+            }
+            
+            await Flight.updateOne(
+                {'flightId':flightId},
+                {
+                    $set:{
+                        'airlinesName':value["airlinesName"],
+                        'flightStatus': value["flightStatus"],
+                        'departureTime': value["departureTime"],
+                        'arrivalTime': value['arrivalTime'],
+                        'seatsAvailable': value['seatsAvailable'],
+                        'stops': value["stops"],
+                        'journey.source': value["source"],
+                        'journey.destination': value["destination"]
+                    },
+                    $push:{
+                        'fare':{
+                            $each:[
+                                {travelClass:'businessClass',baseFare:value["businessClass"]},
+                                {travelClass:'firstClass',baseFare:value["firstClass"]}
+                            ],
+                            $position:0,
+                            $slice:2
+                        }
+                    }
+                }
+            )
+            return this.res.redirect('/flight/list')
         } catch(err){
             return this.next(err)
         }

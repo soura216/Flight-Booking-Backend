@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../layouts/header') %> 
+    <body>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <%- include('../../layouts/navbar') %> 
+            <!-- Page Content -->
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-header">Edit Flight</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Flight Form
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form role="form" method="post" action="/flight/edit">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Airlines Name
+                                                    </label>
+                                                    <input class="form-control" name="airlinesName" value="<%= flightDetails.airlinesName %>">
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].airlinesName
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].airlinesName %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Flight Status</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="flightStatus" value="Running" <%= (flightDetails.flightStatus == 'Running')?'checked':'' %>>Running
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="flightStatus" value="Cancelled" <%= (flightDetails.flightStatus == 'Cancelled')?'checked':'' %>>Cancelled
+                                                        </label>
+                                                    </div>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].flightStatus
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].flightStatus %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Departure Time</label>
+                                                    <input class="form-control"  type="date" name="departureTime" value="<%= flightDetails.departureTime %>">
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].departureTime
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].departureTime %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Arrival Time</label>
+                                                    <input class="form-control"  type="date" name="arrivalTime" value="<%= flightDetails.arrivalTime %>">
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].arrivalTime
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].arrivalTime %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Seats Available</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="seatsAvailable" value="40" <%= (flightDetails.seatsAvailable == 40)?'checked':'' %> >40
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="seatsAvailable" value="50" <%= (flightDetails.seatsAvailable == 50)?'checked':'' %>>50
+                                                        </label>
+                                                    </div>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].seatsAvailable
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].seatsAvailable %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Business Class Fare</label>
+                                                    <select class="form-control" name="businessClass">
+                                                        <option>Select Fare</option>
+                                                        <option value="30000" <%= (flightDetails.fare[0].baseFare == 30000)?'selected':'' %>>30000</option>
+                                                        <option value="40000" <%= (flightDetails.fare[0].baseFare == 40000)?'selected':'' %>>40000</option>
+                                                        <option value="50000" <%= (flightDetails.fare[0].baseFare == 50000)?'selected':'' %>>50000</option>
+                                                        <option value="60000" <%= (flightDetails.fare[0].baseFare == 60000)?'selected':'' %>>60000</option>
+                                                    </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].businessClass
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].businessClass %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>First Class Fare</label>
+                                                    <select class="form-control" name="firstClass">
+                                                        <option>Select Fare</option>
+                                                        <option value="3000" <%= (flightDetails.fare[1].baseFare == 3000)?'selected':'' %>>3000</option>
+                                                        <option value="4000" <%= (flightDetails.fare[1].baseFare == 4000)?'selected':'' %>>4000</option>
+                                                        <option value="5000" <%= (flightDetails.fare[1].baseFare == 5000)?'selected':'' %>>5000</option>
+                                                        <option value="6000" <%= (flightDetails.fare[1].baseFare == 6000)?'selected':'' %>>6000</option>
+                                                    </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].firstClass
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].firstClass %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Stops</label>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="stops" value="0" <%= (flightDetails.stops == 0)?'checked':'' %>>0
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="stops" value="1" <%= (flightDetails.stops == 1)?'checked':'' %>>1
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="stops" value="2" <%= (flightDetails.stops == 2)?'checked':'' %>>2
+                                                        </label>
+                                                    </div>
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="stops" value="3" <%= (flightDetails.stops == 3)?'checked':'' %>>3
+                                                        </label>
+                                                    </div>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].stops
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].stops %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Source</label>
+                                                    <select class="form-control" name="source">
+                                                        <option value="">Select State</option>
+                                                        <option value="Kolkata" <%= (flightDetails.journey.source == 'Kolkata')?'selected':'' %>>Kolkata</option>
+                                                        <option value="Mumbai" <%= (flightDetails.journey.source == 'Mumbai')?'selected':'' %>>Mumbai</option>
+                                                        <option value="Delhi" <%= (flightDetails.journey.source == 'Delhi')?'selected':'' %>>Delhi</option>
+                                                        <option value="Bangalore" <%= (flightDetails.journey.source == 'Bangalore')?'selected':'' %>>Bangalore</option>
+                                                        <option value="Bhubaneswar" <%= (flightDetails.journey.source == 'Bhubaneswar')?'selected':'' %>>Bhubaneswar</option>
+                                                    </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].source
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].source %></p>
+                                                    <% } %>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Destination</label>
+                                                    <select class="form-control" name="destination">
+                                                        <option value="">Select State</option>
+                                                        <option value="Kolkata" <%= (flightDetails.journey.destination == 'Kolkata')?'selected':'' %>>Kolkata</option>
+                                                        <option value="Mumbai" <%= (flightDetails.journey.destination == 'Mumbai')?'selected':'' %>>Mumbai</option>
+                                                        <option value="Delhi" <%= (flightDetails.journey.destination == 'Delhi')?'selected':'' %>>Delhi</option>
+                                                        <option value="Bangalore" <%= (flightDetails.journey.destination == 'Bangalore')?'selected':'' %>>Bangalore</option>
+                                                        <option value="Bhubaneswar" <%= (flightDetails.journey.destination == 'Bhubaneswar')?'selected':'' %>>Bhubaneswar</option>
+                                                    </select>
+                                                    <% if (
+                                                        messages && messages.error && 
+                                                        messages.error[0] && messages.error[0].destination
+                                                    ) { %>
+                                                        <p class="help-block error-field-msg"><%= messages.error[0].destination %></p>
+                                                    <% } %>
+                                                </div>
+                                                <input type="hidden" value="<%= csrf %>" name="csrf">
+                                                <input type="hidden" value="<%= flightDetails.flightId %>" name="flightId">
+                                                <button type="submit" class="btn btn-default">Submit Button</button>
+                                                <button type="reset" class="btn btn-default">Reset Button</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../../layouts/footer') %> 
+    </body>
+</html>

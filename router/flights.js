@@ -16,4 +16,12 @@ router.get('/list',session_handler,(req,res,next)=>{
     new Flights(req,res,next).list();
 })
 
+router.get('/edit/:flightId',session_handler,(req,res,next)=>{
+    new Flights(req,res,next).editForm();
+})
+
+router.post('/edit',[session_handler,csrf_handler],(req,res,next)=>{
+    new Flights(req,res,next).editAction();
+})
+
 module.exports = router;
