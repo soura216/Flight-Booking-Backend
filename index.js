@@ -35,6 +35,6 @@ require('./src/utils/database_connection')();
 require('./src/router/index')(app);
 app.use(require('./src/utils/error_handler'));
 
-app.listen(8000,()=>{
- console.log(`Server port ${process.env.PORT} is running`)
+app.listen(process.env.PORT || 8000,()=>{
+ console.log(`Server port ${process.env.PORT || 8000} is running`)
 })
