@@ -6,7 +6,7 @@ dotenv.config();
 
 app.use(Express.json())
 app.use(Express.urlencoded({extended:false}))
-app.use(Express.static(__dirname+'/public'))
+app.use(Express.static(__dirname+'/src/public'))
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -27,11 +27,13 @@ const flash = require('express-flash');
 app.use(flash())
 
 global.rootDirectory = __dirname;
-app.set('view engine','ejs');
 
-require('./utils/database_connection')();
-require('./router/index')(app);
-app.use(require('./utils/error_handler'));
+app.set('views',__dirname+'/src/views');
+app.set('view engine', 'ejs');
+
+require('./src/utils/database_connection')();
+require('./src/router/index')(app);
+app.use(require('./src/utils/error_handler'));
 
 app.listen(8000,()=>{
  console.log(`Server port ${process.env.PORT} is running`)
