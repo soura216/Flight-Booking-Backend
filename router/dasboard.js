@@ -7,4 +7,8 @@ router.get('/',session_handler,(req,res)=>{
     new Dashboard(req,res).index()
 });
 
+router.get('/user-list',session_handler,(req,res)=>{ 
+    new Dashboard(req,res).usersList()
+});
+
 module.exports = router; 

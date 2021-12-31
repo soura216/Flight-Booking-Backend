@@ -70,9 +70,9 @@
                 <i class="fa fa-user fa-fw"></i> <span id="user-name"></span> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a href="#"><i class="fa fa-user fa-fw"></i>Profile</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a> -->
                 </li>
                 <li class="divider"></li>
                 <li><a href="/auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -101,10 +101,15 @@
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-table fa-fw"></i>Tables</a>
+                    <a href="#"><i class="fa fa-users fa-fw"></i>Users<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/user-list"><i class="fa fa-edit fa-fw"></i> List</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-edit fa-fw"></i>Forms</a>
+                    <a href="#"><i class="fa fa-ticket fa-fw"></i>Booking Info</a>
                 </li>
             </ul>
         </div>
