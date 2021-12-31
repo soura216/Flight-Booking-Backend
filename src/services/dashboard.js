@@ -21,6 +21,23 @@ module.exports = class Dashboard{
         } catch(err){
             return this.next(err)
         }
-
     }    
+
+    async editAdminProfile(){
+        try{
+            return this.res.render('pages/admin-profile',{csrf:this.req.session.csrf}) 
+        } catch(err){
+            return this.next(err)
+        }    
+    }
+
+    async editAdminProfileAction(){
+        try{
+            // console.log(this.req.file)
+            // console.log(this.req.body)
+        } catch(err){
+            // console.log(err)
+            return this.next(err)
+        }
+    }
 }
