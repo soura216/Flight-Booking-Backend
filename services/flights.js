@@ -1,6 +1,7 @@
 const Flight = require('../models/Flight');
 const { flashError, joiSchemaOptions, flightsFormSchema } = require('../utils/form_utils');
 const moment = require('moment')
+
 module.exports = class Flights {
    
     constructor(req,res,next){
