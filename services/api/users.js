@@ -34,7 +34,7 @@ module.exports = class Users{
             const emailId = this.req.body.emailId;
             const password = this.req.body.password;
             let userDetails = await User.findOne(
-                {'emailId':emailId},{_id:0,__v:0}
+                {'emailId':emailId,userRole:"User"},{_id:0,__v:0}
             );
             if(userDetails){
                 const isPasswordMatch = await bcrypt.compare(password,userDetails.password)

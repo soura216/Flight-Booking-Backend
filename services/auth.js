@@ -44,7 +44,7 @@ module.exports = class Auth{
                 return this.res.redirect('/auth/login')
             } else {
                 const userDetails = await User.findOne(
-                    {emailId:value["emailId"],userRole:"User"},
+                    {emailId:value["emailId"],userRole:"Admin"},
                 )
                 if(userDetails){
                     const isPasswordMatch = await bcrypt.compare(value["password"],userDetails.password)
