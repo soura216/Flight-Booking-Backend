@@ -39,6 +39,7 @@ module.exports = class Flights {
                 destination: value["destination"]
             }
             await flight.save();
+            this.req.flash('success', 'Successfully created!');
             return this.res.redirect('/flight/list')
         } catch(err){
             return this.next(err)
@@ -126,6 +127,7 @@ module.exports = class Flights {
                     }
                 }
             )
+            this.req.flash('success', 'Successfully updated!');
             return this.res.redirect('/flight/list')
         } catch(err){
             return this.next(err)

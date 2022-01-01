@@ -55,6 +55,9 @@ const schema = new mongoose.Schema({
         enum: ['Admin', 'User'],
         default: 'User'
     },
+    userProfile: {
+        type: String
+    },
     bookings:[userBookingsSchema]
 })
 

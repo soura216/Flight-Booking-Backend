@@ -2,9 +2,10 @@ const User = require('../models/User');
 
 module.exports = class Dashboard{
 
-    constructor(req,res){
+    constructor(req,res,next){
         this.req = req;
         this.res = res;
+        this.next = next;
     }
 
     index(){
@@ -25,7 +26,11 @@ module.exports = class Dashboard{
 
     async editAdminProfile(){
         try{
-            return this.res.render('pages/admin-profile',{csrf:this.req.session.csrf}) 
+            const userDetails = await User.findOne(
+                {userId: this.req.session.authId},
+                {_id: 0}
+            )
+            return this.res.render('pages/admin-profile',{csrf:this.req.session.csrf,userDetails:userDetails}) 
         } catch(err){
             return this.next(err)
         }    
@@ -33,10 +38,18 @@ module.exports = class Dashboard{
 
     async editAdminProfileAction(){
         try{
-            // console.log(this.req.file)
-            // console.log(this.req.body)
+            let $setObj = {};
+            $setObj.userName = this.req.body.userName;
+            if(this.req.files.userProfile && this.req.files.userProfile[0].filename) $setObj.userProfile = this.req.files.userProfile[0].filename;
+            await User.update(
+                {userId: this.req.session.authId},
+                {
+                    $set: $setObj
+                }
+            );
+            this.req.flash('success', 'Successfully updated!');
+            return this.res.redirect('/')
         } catch(err){
-            // console.log(err)
             return this.next(err)
         }
     }
