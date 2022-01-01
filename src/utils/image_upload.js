@@ -51,7 +51,7 @@ module.exports = multer({
     [
         {
             name:'userProfile',
-            maxCount:10
+            maxCount:1
         }
     ]
 )

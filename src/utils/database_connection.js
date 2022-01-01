@@ -26,8 +26,10 @@ const createAdminUser = async function(){
             {userRole:'Admin'},
             {
                 $set:{
+                    'emailId': 'admin@gmail.com'
+                },
+                $setOnInsert:{
                     'userId': Date.now(),
-                    'emailId': 'admin@gmail.com',
                     'password': hashPassword,
                     'userName': 'admin'
                 }
