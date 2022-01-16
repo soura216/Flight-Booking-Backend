@@ -104,7 +104,9 @@ module.exports = class Flights {
             const { flightId } = this.req.body;
             if(error){
                 await flashError(error,this.req);
-                return this.res.redirect('/flight/edit/'+flightId);
+                let oldValue = await flightsFormOldValue(value);  
+                oldValue.flightId = flightId;             
+                return this.res.render('pages/flight/edit',{csrf:this.req.session.csrf,flightDetails:oldValue})
             }
             
             await Flight.updateOne(
