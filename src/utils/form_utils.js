@@ -4,8 +4,8 @@ const moment = require('moment');
 module.exports.flightsFormSchema = joi.object({
     airlinesName: joi.string().required(),
     flightStatus: joi.string().required(),
-    departureTime: joi.date().required(),
-    arrivalTime: joi.date().required(),
+    departureTime: joi.date().iso().required(),
+    arrivalTime: joi.date().iso().min(joi.ref('departureTime')).required(),
     seatsAvailable: joi.number().required(),
     businessClass: joi.number().required(),
     firstClass: joi.number().required(),
@@ -39,7 +39,14 @@ module.exports.flashError = (error,req)=>{
     const obj = {}
     error.details.map((data,index)=>{
         let key = data.message.split('"')[1]
-        obj[key] = `${errorFieldName[key] || data.message.split('"')[1]} ${data.message.split('"')[2]}`
+        obj[key] = `${errorFieldName[key] || data.message.split('"')[1]} ${data.message.split('"')[2]}`;
+        if(key === 'arrivalTime' && obj[key].search("greater than or equal") != -1){
+            obj[key] = `${obj[key]} ${errorFieldName['departureTime']}`
+        } else if((key === 'arrivalTime' || key === 'departureTime') && obj[key].search("must be in ISO 8601 date format") != -1){
+            obj[key] = `${errorFieldName[key]} must be in date format`
+        } else if(key === 'destination' && obj[key].search('contains an invalid value') != -1){
+            obj[key] = `${errorFieldName[key]} must be different than ${errorFieldName['source']}`
+        }
     })
     req.flash('error',obj);
     return;
