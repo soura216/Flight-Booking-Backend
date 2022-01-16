@@ -1,5 +1,5 @@
 const Flight = require('../models/Flight');
-const { flashError, joiSchemaOptions, flightsFormSchema } = require('../utils/form_utils');
+const { flashError, joiSchemaOptions, flightsFormSchema, flightsFormOldValue } = require('../utils/form_utils');
 const moment = require('moment')
 
 module.exports = class Flights {
@@ -11,7 +11,11 @@ module.exports = class Flights {
     }
 
     createForm(){
-        return this.res.render('pages/flight/add',{csrf:this.req.session.csrf})
+        const oldValue = {
+            journey:{source:'',destination:''},
+            fare:[{baseFare:''},{baseFare:''}]
+        };
+        return this.res.render('pages/flight/add',{csrf:this.req.session.csrf,flightDetails:oldValue})
     }
 
     async createAction(){
@@ -20,7 +24,8 @@ module.exports = class Flights {
             const { error, value }  = schema.validate(this.req.body,joiSchemaOptions);
             if(error){
                 await flashError(error,this.req);
-                return this.res.redirect('/flight/create');
+                const oldValue = await flightsFormOldValue(value);                
+                return this.res.render('pages/flight/add',{csrf:this.req.session.csrf,flightDetails:oldValue})
             }
             const flight = new Flight();
             flight.flightId = Date.now();

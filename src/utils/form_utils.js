@@ -1,4 +1,5 @@
 const joi = require('joi')
+const moment = require('moment');
 
 module.exports.flightsFormSchema = joi.object({
     airlinesName: joi.string().required(),
@@ -12,6 +13,21 @@ module.exports.flightsFormSchema = joi.object({
     source: joi.string().required(),
     destination: joi.string().disallow(joi.ref('source')).required()
 });
+
+module.exports.flightsFormOldValue = (value)=>{
+    let oldValue = value;
+    oldValue.journey = {
+        source: value.source,
+        destination: value.destination
+    };
+    oldValue.fare = [
+        { baseFare:  value["businessClass"] },
+        { baseFare:  value["firstClass"] }
+    ];
+    oldValue.arrivalTime = moment(oldValue.arrivalTime).format('YYYY-MM-DD');
+    oldValue.departureTime = moment(oldValue.departureTime).format('YYYY-MM-DD');
+    return oldValue;
+};
 
 module.exports.joiSchemaOptions = {
     abortEarly: false, // include all errors

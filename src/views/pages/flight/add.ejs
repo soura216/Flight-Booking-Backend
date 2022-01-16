@@ -27,7 +27,7 @@
                                                     <label>
                                                         Airlines Name
                                                     </label>
-                                                    <input class="form-control" name="airlinesName" value="">
+                                                    <input class="form-control" name="airlinesName" value="<%= flightDetails.airlinesName %>">
                                                     <% if (
                                                         messages && messages.error && 
                                                         messages.error[0] && messages.error[0].airlinesName
@@ -39,12 +39,12 @@
                                                     <label>Flight Status</label>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="flightStatus" value="Running">Running
+                                                            <input type="radio" name="flightStatus" value="Running" <%= (flightDetails.flightStatus == 'Running')?'checked':'' %>>Running
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="flightStatus" value="Cancelled">Cancelled
+                                                            <input type="radio" name="flightStatus" value="Cancelled" <%= (flightDetails.flightStatus == 'Cancelled')?'checked':'' %>>Cancelled
                                                         </label>
                                                     </div>
                                                     <% if (
@@ -56,7 +56,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Departure Time</label>
-                                                    <input class="form-control"  type="date" name="departureTime">
+                                                    <input class="form-control"  type="date" name="departureTime" value="<%= flightDetails.departureTime %>">
                                                     <% if (
                                                         messages && messages.error && 
                                                         messages.error[0] && messages.error[0].departureTime
@@ -66,7 +66,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Arrival Time</label>
-                                                    <input class="form-control"  type="date" name="arrivalTime">
+                                                    <input class="form-control"  type="date" name="arrivalTime" value="<%= flightDetails.arrivalTime %>">
                                                     <% if (
                                                         messages && messages.error && 
                                                         messages.error[0] && messages.error[0].arrivalTime
@@ -78,12 +78,12 @@
                                                     <label>Seats Available</label>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="seatsAvailable" value="40">40
+                                                            <input type="radio" name="seatsAvailable" value="40" <%= (flightDetails.seatsAvailable == 40)?'checked':'' %>>40
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="seatsAvailable" value="50">50
+                                                            <input type="radio" name="seatsAvailable" value="50" <%= (flightDetails.seatsAvailable == 50)?'checked':'' %>>50
                                                         </label>
                                                     </div>
                                                     <% if (
@@ -97,10 +97,10 @@
                                                     <label>Business Class Fare</label>
                                                     <select class="form-control" name="businessClass">
                                                         <option>Select Fare</option>
-                                                        <option value="30000">30000</option>
-                                                        <option value="40000">40000</option>
-                                                        <option value="50000">50000</option>
-                                                        <option value="60000">60000</option>
+                                                        <option value="30000" <%= (flightDetails.fare[0].baseFare == 30000)?'selected':'' %>>30000</option>
+                                                        <option value="40000" <%= (flightDetails.fare[0].baseFare == 40000)?'selected':'' %>>40000</option>
+                                                        <option value="50000" <%= (flightDetails.fare[0].baseFare == 50000)?'selected':'' %>>50000</option>
+                                                        <option value="60000" <%= (flightDetails.fare[0].baseFare == 60000)?'selected':'' %>>60000</option>
                                                     </select>
                                                     <% if (
                                                         messages && messages.error && 
@@ -113,10 +113,10 @@
                                                     <label>First Class Fare</label>
                                                     <select class="form-control" name="firstClass">
                                                         <option>Select Fare</option>
-                                                        <option value="3000">3000</option>
-                                                        <option value="4000">4000</option>
-                                                        <option value="5000">5000</option>
-                                                        <option value="6000">6000</option>
+                                                        <option value="3000" <%= (flightDetails.fare[1].baseFare == 3000)?'selected':'' %>>3000</option>
+                                                        <option value="4000" <%= (flightDetails.fare[1].baseFare == 4000)?'selected':'' %>>4000</option>
+                                                        <option value="5000" <%= (flightDetails.fare[1].baseFare == 5000)?'selected':'' %>>5000</option>
+                                                        <option value="6000" <%= (flightDetails.fare[1].baseFare == 6000)?'selected':'' %>>6000</option>
                                                     </select>
                                                     <% if (
                                                         messages && messages.error && 
@@ -129,22 +129,22 @@
                                                     <label>Stops</label>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="stops" value="0">0
+                                                            <input type="radio" name="stops" value="0" <%= (flightDetails.stops == 0)?'checked':'' %>>0
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="stops" value="1">1
+                                                            <input type="radio" name="stops" value="1" <%= (flightDetails.stops == 1)?'checked':'' %>>1
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="stops" value="2">2
+                                                            <input type="radio" name="stops" value="2" <%= (flightDetails.stops == 2)?'checked':'' %>>2
                                                         </label>
                                                     </div>
                                                     <div class="radio">
                                                         <label>
-                                                            <input type="radio" name="stops" value="3">3
+                                                            <input type="radio" name="stops" value="3" <%= (flightDetails.stops == 3)?'checked':'' %>>3
                                                         </label>
                                                     </div>
                                                     <% if (
@@ -158,11 +158,11 @@
                                                     <label>Source</label>
                                                     <select class="form-control" name="source">
                                                         <option value="">Select State</option>
-                                                        <option value="Kolkata">Kolkata</option>
-                                                        <option value="Mumbai">Mumbai</option>
-                                                        <option value="Delhi">Delhi</option>
-                                                        <option value="Bangalore">Bangalore</option>
-                                                        <option value="Bhubaneswar">Bhubaneswar</option>
+                                                        <option value="Kolkata" <%= (flightDetails.journey.source == 'Kolkata')?'selected':'' %>>Kolkata</option>
+                                                        <option value="Mumbai" <%= (flightDetails.journey.source == 'Mumbai')?'selected':'' %>>Mumbai</option>
+                                                        <option value="Delhi" <%= (flightDetails.journey.source == 'Delhi')?'selected':'' %>>Delhi</option>
+                                                        <option value="Bangalore" <%= (flightDetails.journey.source == 'Bangalore')?'selected':'' %>>Bangalore</option>
+                                                        <option value="Bhubaneswar" <%= (flightDetails.journey.source == 'Bhubaneswar')?'selected':'' %>>Bhubaneswar</option>
                                                     </select>
                                                     <% if (
                                                         messages && messages.error && 
@@ -175,11 +175,11 @@
                                                     <label>Destination</label>
                                                     <select class="form-control" name="destination">
                                                         <option value="">Select State</option>
-                                                        <option value="Kolkata">Kolkata</option>
-                                                        <option value="Mumbai">Mumbai</option>
-                                                        <option value="Delhi">Delhi</option>
-                                                        <option value="Bangalore">Bangalore</option>
-                                                        <option value="Bhubaneswar">Bhubaneswar</option>
+                                                        <option value="Kolkata" <%= (flightDetails.journey.destination == 'Kolkata')?'selected':'' %>>Kolkata</option>
+                                                        <option value="Mumbai" <%= (flightDetails.journey.destination == 'Mumbai')?'selected':'' %>>Mumbai</option>
+                                                        <option value="Delhi" <%= (flightDetails.journey.destination == 'Delhi')?'selected':'' %>>Delhi</option>
+                                                        <option value="Bangalore" <%= (flightDetails.journey.destination == 'Bangalore')?'selected':'' %>>Bangalore</option>
+                                                        <option value="Bhubaneswar" <%= (flightDetails.journey.destination == 'Bhubaneswar')?'selected':'' %>>Bhubaneswar</option>
                                                     </select>
                                                     <% if (
                                                         messages && messages.error && 
