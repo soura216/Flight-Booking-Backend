@@ -14,6 +14,12 @@ module.exports.flightsFormSchema = joi.object({
     destination: joi.string().disallow(joi.ref('source')).required()
 });
 
+module.exports.registrationFormSchema = joi.object({
+    emailId: joi.string().email(),
+    password: joi.string().required(),
+    userName: joi.string().required()
+}); 
+
 module.exports.flightsFormOldValue = (value)=>{
     let oldValue = value;
     oldValue.journey = {
@@ -36,6 +42,12 @@ module.exports.joiSchemaOptions = {
 }
 
 module.exports.flashError = (error,req)=>{
+    const errorObj = this.errorMsg(error);
+    req.flash('error',errorObj);
+    return;
+};
+
+module.exports.errorMsg = (error)=>{
     const obj = {}
     error.details.map((data,index)=>{
         let key = data.message.split('"')[1]
@@ -48,9 +60,8 @@ module.exports.flashError = (error,req)=>{
             obj[key] = `${errorFieldName[key]} must be different than ${errorFieldName['source']}`
         }
     })
-    req.flash('error',obj);
-    return;
-};
+    return obj;
+}
 
 const errorFieldName = {
     airlinesName: 'Airlines Name',
@@ -62,5 +73,8 @@ const errorFieldName = {
     firstClass: 'First Class Fare',
     stops: 'Stops',
     source: 'Source',
-    destination: 'Destination'
-}
+    destination: 'Destination',
+    emailId: 'Email ID',
+    password: 'Password',
+    userName: 'Username'
+}   

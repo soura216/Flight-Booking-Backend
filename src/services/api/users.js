@@ -1,5 +1,7 @@
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { registrationFormSchema, joiSchemaOptions, errorMsg } = require('../../utils/form_utils');
 
 module.exports = class Users{
 
@@ -13,13 +15,16 @@ module.exports = class Users{
         try {
             const user = new User();
             user.emailId = this.req.body.emailId;
+            const { error } = await registrationFormSchema.validate(this.req.body,joiSchemaOptions);
+            if(error) return this.res.status(400).send({ error: errorMsg(error) });  
             const salt = await bcrypt.genSalt(10)
             const hashPassword =  await bcrypt.hash(this.req.body.password,salt)
             user.userId = Date.now();
             user.password = hashPassword;    
             user.userName = this.req.body.userName;
             const insertedUSer =  await user.save();
-            return this.res.status(200).send({insertedUSer:insertedUSer})
+            const token = await jwt.sign({userId:insertedUSer.userId},process.env['JWT-TOKEN']);
+            return this.res.status(200).header({'x-auth-token':token}).send({msg:'Registration successfully !',userDetails:insertedUSer})
         } catch(err){
             if (err.name === 'ValidationError') 
                 return this.res.status(400).send({ error: err.message }); 
@@ -41,7 +46,8 @@ module.exports = class Users{
                 if(isPasswordMatch){
                     userDetails = userDetails.toObject()
                     delete userDetails.password;
-                    return this.res.status(200).send({
+                    const token = await jwt.sign({userId:userDetails.userId},process.env['JWT-TOKEN']);
+                    return this.res.status(200).header({'x-auth-token':token}).send({
                         userDetails: userDetails,
                         msg: 'Login successfully!'
                     })
