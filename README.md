@@ -6,7 +6,7 @@ Node.js 12.16.2 or higher is required.
 [Download and Install MongoDB](https://www.mongodb.com/).
 MongoDB shell version 4.2.6 or higher is required.
 
-Installation is done using the `npm install` command
+Installation is done using the `npm install` command 
  
 ## Development server
 
