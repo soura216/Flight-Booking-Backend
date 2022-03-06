@@ -11,11 +11,20 @@ module.exports =  class Flights{
     async list(){
         try{
             let flighList;
-            const { departure_time, arrival_time } = this.req.body;
+            const { departure_time, arrival_time, source, destination } = this.req.body;
             let $filter = [];
-            if(departure_time) $filter.push({
-                'departureTime':{$gte:departure_time}
-            });
+            if(departure_time) $filter.push(
+                {'departureTime':{$gte:departure_time}}
+            );
+            if(arrival_time) $filter.push(
+                {'arrivalTime': {$lte:arrival_time}}
+            );
+            if(source) $filter.push(
+                {'journey.source':source}
+            );
+            if(destination) $filter.push(
+                {'journey.destination':destination}
+            ); 
             if($filter.length > 0){
                 flighList = await Flight.find({$and:$filter});
             } else {
