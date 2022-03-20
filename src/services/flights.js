@@ -62,19 +62,20 @@ module.exports = class Flights {
                             {'journey.source':{$eq:source}},
                             {'journey.destination':{$eq:destination}},
                             {'departureTime':{$gte:departureTime}},
-                            {'arrivalTime':{$lte:arrivalTime}}
+                            {'arrivalTime':{$lte:arrivalTime}},
+                            {'airlinesName':{$exists:true}}
                         ]
                     },
                     {_id:0}
                 )
             } else {
                 flightsList = await Flight.find(
-                    {},
+                    {'airlinesName':{$exists:true}},
                     {_id:0}
                 )
             }
-            const sourceList = await Flight.distinct('journey.source');
-            const destinationList = await Flight.distinct('journey.destination');
+            const sourceList = await Flight.distinct('journey.source',{'airlinesName':{$exists:true}});
+            const destinationList = await Flight.distinct('journey.destination',{'airlinesName':{$exists:true}});
             return this.res.render('pages/flight/list',{'flightsList':flightsList,'sourceList':sourceList,'destinationList':destinationList});
         } catch(err){
             return this.next(err)
@@ -85,7 +86,7 @@ module.exports = class Flights {
         try{
             const flightId = this.req.params.flightId;
             let flightDetails = await Flight.findOne(
-                {'flightId':flightId},
+                {'flightId':flightId,'airlinesName':{$exists:true}},
                 {_id:0}
             )
             flightDetails = flightDetails.toObject()
@@ -110,7 +111,7 @@ module.exports = class Flights {
             }
             
             await Flight.updateOne(
-                {'flightId':flightId},
+                {'flightId':flightId,'airlinesName':{$exists:true}},
                 {
                     $set:{
                         'airlinesName':value["airlinesName"],

@@ -46,10 +46,7 @@ const schema = new mongoose.Schema({
     },
     journey:{
         type: journeySchema
-    },
-    bookings:{
-        type: Array
-    } 
+    }
 })
 
 module.exports = mongoose.model('Flight',schema)

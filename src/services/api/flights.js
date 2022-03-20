@@ -13,6 +13,9 @@ module.exports =  class Flights{
             let flighList;
             const { departure_time, arrival_time, source, destination } = this.req.body;
             let $filter = [];
+            $filter.push(
+                {'airlinesName':{$exists:true}}
+            );
             if(departure_time) $filter.push(
                 {'departureTime':{$gte:departure_time}}
             );
@@ -25,11 +28,7 @@ module.exports =  class Flights{
             if(destination) $filter.push(
                 {'journey.destination':destination}
             ); 
-            if($filter.length > 0){
-                flighList = await Flight.find({$and:$filter});
-            } else {
-                flighList = await Flight.find();
-            }    
+            flighList = await Flight.find({$and:$filter});
             return this.res.status(200).send({msg:'ok',flighList:flighList})
         } catch(err){
             return this.next(err)

@@ -6,4 +6,5 @@ module.exports = function(app){
 
     app.use('/api/users',require('./api/users'));
     app.use('/api/flights',require('./api/flights'));
+    app.use('/api/bookings',require('./api/bookings'));
 }

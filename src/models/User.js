@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const userBookingsSchema = require('./UserBookings');
 
 const emailValidate = function(data){
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -57,8 +56,7 @@ const schema = new mongoose.Schema({
     },
     userProfile: {
         type: String
-    },
-    bookings:[userBookingsSchema]
+    }
 },{
     toJSON: {
         getters: true

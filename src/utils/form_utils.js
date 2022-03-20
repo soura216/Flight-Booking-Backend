@@ -20,6 +20,12 @@ module.exports.registrationFormSchema = joi.object({
     userName: joi.string().required()
 }); 
 
+module.exports.bookingConfirmedSchema = joi.object({
+    travelBookingClass: joi.string().required(),
+    noOfTickets: joi.number().required(),
+    flightId: joi.number().required()
+});
+
 module.exports.flightsFormOldValue = (value)=>{
     let oldValue = value;
     oldValue.journey = {
@@ -76,5 +82,7 @@ const errorFieldName = {
     destination: 'Destination',
     emailId: 'Email ID',
     password: 'Password',
-    userName: 'Username'
+    userName: 'Username',
+    travelBookingClass: 'Travel Booking Class',
+    noOfTickets: 'No Of Tickets'
 }   
